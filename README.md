@@ -28,21 +28,14 @@ flowchart LR
    ```bash
    # Level 1 Example:
    cd level-1-beginner/task-4-grade-calculator
-
-   # Level 2 Example:
-   cd level-2-intermediate/task-1-transaction-service
-
-   # Level 3 Example:
-   cd level-3-advanced/task-1-rate-limiter
    ```
-4. **Investigate & Reproduce:** Read the task `README.md` to understand the scenario and bug tickets. Run the visible tests:
+4. **Investigate & Reproduce:** Read the task `README.md` to understand the scenario and bug tickets. Run the test suite:
    ```bash
    python3 -m unittest discover tests
    ```
-   Observe the failing reproduction tests.
+   Observe the failing reproduction tests. You can also launch the application UI to see the bug in action.
 5. **Fix & Test:** Implement your solution in `src/`. Add new test cases to `tests/` covering edge cases.
-6. **Fill out the Submission Form:** Complete the `CANDIDATE_SUBMISSION.md` file in your task folder.
-7. **Push & Submit:** Push your commits to your fork and submit your repository link to your mentor for automated validation and scheduling your **Technical AI Defense Interview**.
+6. **Push & Submit:** Push your commits to your fork and submit your repository link on the platform. If your automated test evaluation passes, you will be scheduled for your **Technical AI Defense Interview** where you will explain your code and root-cause analysis!
 
 ---
 
@@ -53,11 +46,11 @@ Foundational single-file bugs testing core Python syntax, types, and logic.
 
 | Assessment ID | Task Name | Key Concept Tested | Est. Time | Folder Link |
 |:---:|---|---|:---:|:---:|
-| **BH-L1-004** | **EduGrade Grade Calculator** | Conditionals & Control Flow (`if` fallthrough vs `elif`) | 30–45m | [`level-1-beginner/task-4-grade-calculator`](./level-1-beginner/task-4-grade-calculator) |
-| **BH-L1-005** | **QuickSplit Bill & Tip Calculator** | Arithmetic (`/` vs `//`) & String Type Coercion | 30–45m | [`level-1-beginner/task-5-bill-splitter`](./level-1-beginner/task-5-bill-splitter) |
+| **BH-L1-001** | **TalentCart Order Pricing** | Lists of Dictionaries, Item Eligibility Filtering | 60–75m | [`level-1-beginner/task-1-cart-pricing`](./level-1-beginner/task-1-cart-pricing) |
 | **BH-L1-002** | **UserAuth Profile Data Sanitizer** | String Immutability & Method Assignment (`.strip()`, `.lower()`, `.title()`) | 45–60m | [`level-1-beginner/task-2-user-sanitizer`](./level-1-beginner/task-2-user-sanitizer) |
 | **BH-L1-003** | **WeatherStation Temperature Analyzer** | List Iteration, Sentinel Traps (`min=0.0`), Empty List Handling | 45–60m | [`level-1-beginner/task-3-temperature-tracker`](./level-1-beginner/task-3-temperature-tracker) |
-| **BH-L1-001** | **TalentCart Order Pricing** | Lists of Dictionaries, Item Eligibility Filtering | 60–75m | [`level-1-beginner/task-1-cart-pricing`](./level-1-beginner/task-1-cart-pricing) |
+| **BH-L1-004** | **EduGrade Grade Calculator** | Conditionals & Control Flow (`if` fallthrough vs `elif`) | 30–45m | [`level-1-beginner/task-4-grade-calculator`](./level-1-beginner/task-4-grade-calculator) |
+| **BH-L1-005** | **QuickSplit Bill & Tip Calculator** | Arithmetic (`/` vs `//`) & String Type Coercion | 30–45m | [`level-1-beginner/task-5-bill-splitter`](./level-1-beginner/task-5-bill-splitter) |
 
 ### Level 2: Intermediate Multi-File Bug Hunt Track
 Multi-file domain architectures testing component boundaries, contracts, and compensation rollbacks.
@@ -66,6 +59,9 @@ Multi-file domain architectures testing component boundaries, contracts, and com
 |:---:|---|---|:---:|:---:|
 | **BH-L2-001** | **FinPulse Transaction Summary Service** | Component Contract Misalignment & Status Filter Leakage | 60–90m | [`level-2-intermediate/task-1-transaction-service`](./level-2-intermediate/task-1-transaction-service) |
 | **BH-L2-002** | **ShipStream Inventory Allocator** | Transactional Compensation & Multi-Warehouse Rollback Failure | 60–90m | [`level-2-intermediate/task-2-inventory-allocator`](./level-2-intermediate/task-2-inventory-allocator) |
+| **BH-L2-003** | **AuthShield Session Manager** | Mutable Default Container Sharing & Token Revocation Bypass | 60–90m | [`level-2-intermediate/task-3-session-manager`](./level-2-intermediate/task-3-session-manager) |
+| **BH-L2-004** | **EventBridge Webhook Dispatcher** | Inverted Backoff Calculation, HMAC Format Mismatch & Payload Mutation | 60–90m | [`level-2-intermediate/task-4-webhook-dispatcher`](./level-2-intermediate/task-4-webhook-dispatcher) |
+| **BH-L2-005** | **CloudMetric Aggregator** | Percentile Off-By-One Indexing, Window Boundary Leakage & Zero Suppression | 60–90m | [`level-2-intermediate/task-5-metrics-aggregator`](./level-2-intermediate/task-5-metrics-aggregator) |
 
 ### Level 3: Advanced Unfamiliar Codebase Track
 Stateful infrastructure codebases testing temporal algorithms, clock abstractions, and gap invalidation.
@@ -73,16 +69,20 @@ Stateful infrastructure codebases testing temporal algorithms, clock abstraction
 | Assessment ID | Task Name | Key Concept Tested | Est. Time | Folder Link |
 |:---:|---|---|:---:|:---:|
 | **BH-L3-001** | **CloudGate API Gateway: Sliding-Window Rate Limiter** | Temporal Decay Inversion, Multi-Window Gap Invalidation, Header Underflow | 90–120m | [`level-3-advanced/task-1-rate-limiter`](./level-3-advanced/task-1-rate-limiter) |
+| **BH-L3-002** | **CacheSync Write-Through Cache Coherence** | Read-Your-Own-Writes Consistency, Dirty Key Eviction Data Loss, TTL Expiration | 90–120m | [`level-3-advanced/task-2-cache-sync`](./level-3-advanced/task-2-cache-sync) |
+| **BH-L3-003** | **TaskGraph Workflow Engine Cycle Detection & Fan-In** | Conjunction Error in Fan-In (any vs all), Disconnected Cycle Detection, Failure Skip Cascades | 90–120m | [`level-3-advanced/task-3-task-graph`](./level-3-advanced/task-3-task-graph) |
+| **BH-L3-004** | **ConsensusLease Distributed Leader Lease Manager** | Split-Brain Integer Division Quorum, Election Livelock, RTT Transit Skew | 90–120m | [`level-3-advanced/task-4-consensus-lease`](./level-3-advanced/task-4-consensus-lease) |
+| **BH-L3-005** | **StreamCompactor Partitioned Log Compactor & Watermark Engine** | Tombstone Premature Purge Data Resurrection, Watermark Regression, Sparse Index Corruption | 90–120m | [`level-3-advanced/task-5-stream-compactor`](./level-3-advanced/task-5-stream-compactor) |
 
 ---
 
 ## Assessment Rules & Evaluation
 
-- **Environment:** Requires Python 3.8 or newer. Zero external pip packages required across all tasks.
+- **Environment:** Requires Python 3.8 or newer.
 - **Contract Integrity:** Do not change public method signatures, module file names, or interface contracts.
 - **Testing Discipline:** You must write new unit tests in `tests/` to prove your fix works across edge cases.
 - **Deterministic Testing:** In Level 3 tasks, use the provided `TestClock` injection pattern rather than flaky `time.sleep()`.
-- **Responsible AI Use:** You are permitted to use AI coding tools (e.g., Copilot, ChatGPT, Claude), but you must disclose their use in `CANDIDATE_SUBMISSION.md` and thoroughly understand your code. During the follow-up AI interview, you will be asked to explain your implementation line by line.
+- **Responsible AI Use:** You are permitted to use AI coding tools (e.g., Copilot, ChatGPT, Claude), but you must thoroughly understand your code. During the follow-up AI interview, you will be asked to explain your implementation line by line.
 
 ---
 
@@ -94,5 +94,5 @@ Stateful infrastructure codebases testing temporal algorithms, clock abstraction
 | **Root-Cause Analysis** | **20 pts** | You clearly articulate the technical cause of the defect, not just the symptom. |
 | **Testing & Regression Prevention** | **20 pts** | You wrote comprehensive automated unit tests covering boundaries and potential regressions. |
 | **Code Quality & Engineering Judgment** | **15 pts** | Clean, idiomatic, readable Python adhering to repository conventions. |
-| **Responsible AI Use & Verification** | **15 pts** | You take full ownership of your code, explain all decisions, and critically verify any tool output. |
+| **Technical Interview Defense** | **15 pts** | You take full ownership of your code and defend your architectural and algorithmic choices during the interview. |
 | **Total** | **100 pts** | |
