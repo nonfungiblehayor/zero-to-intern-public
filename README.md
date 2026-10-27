@@ -26,7 +26,14 @@ flowchart LR
    ```
 3. **Navigate to your assigned task folder:** For example:
    ```bash
+   # Level 1 Example:
    cd level-1-beginner/task-4-grade-calculator
+
+   # Level 2 Example:
+   cd level-2-intermediate/task-1-transaction-service
+
+   # Level 3 Example:
+   cd level-3-advanced/task-1-rate-limiter
    ```
 4. **Investigate & Reproduce:** Read the task `README.md` to understand the scenario and bug tickets. Run the visible tests:
    ```bash
@@ -39,9 +46,10 @@ flowchart LR
 
 ---
 
-## Level 1: Beginner Python Debugging Track
+## Curriculum & Tracks
 
-These foundational tasks focus on the core building blocks of Python. All tasks use the **Python 3 Standard Library only** (no external pip dependencies).
+### Level 1: Beginner Python Debugging Track
+Foundational single-file bugs testing core Python syntax, types, and logic.
 
 | Assessment ID | Task Name | Key Concept Tested | Est. Time | Folder Link |
 |:---:|---|---|:---:|:---:|
@@ -51,13 +59,29 @@ These foundational tasks focus on the core building blocks of Python. All tasks 
 | **BH-L1-003** | **WeatherStation Temperature Analyzer** | List Iteration, Sentinel Traps (`min=0.0`), Empty List Handling | 45–60m | [`level-1-beginner/task-3-temperature-tracker`](./level-1-beginner/task-3-temperature-tracker) |
 | **BH-L1-001** | **TalentCart Order Pricing** | Lists of Dictionaries, Item Eligibility Filtering | 60–75m | [`level-1-beginner/task-1-cart-pricing`](./level-1-beginner/task-1-cart-pricing) |
 
+### Level 2: Intermediate Multi-File Bug Hunt Track
+Multi-file domain architectures testing component boundaries, contracts, and compensation rollbacks.
+
+| Assessment ID | Task Name | Key Concept Tested | Est. Time | Folder Link |
+|:---:|---|---|:---:|:---:|
+| **BH-L2-001** | **FinPulse Transaction Summary Service** | Component Contract Misalignment & Status Filter Leakage | 60–90m | [`level-2-intermediate/task-1-transaction-service`](./level-2-intermediate/task-1-transaction-service) |
+| **BH-L2-002** | **ShipStream Inventory Allocator** | Transactional Compensation & Multi-Warehouse Rollback Failure | 60–90m | [`level-2-intermediate/task-2-inventory-allocator`](./level-2-intermediate/task-2-inventory-allocator) |
+
+### Level 3: Advanced Unfamiliar Codebase Track
+Stateful infrastructure codebases testing temporal algorithms, clock abstractions, and gap invalidation.
+
+| Assessment ID | Task Name | Key Concept Tested | Est. Time | Folder Link |
+|:---:|---|---|:---:|:---:|
+| **BH-L3-001** | **CloudGate API Gateway: Sliding-Window Rate Limiter** | Temporal Decay Inversion, Multi-Window Gap Invalidation, Header Underflow | 90–120m | [`level-3-advanced/task-1-rate-limiter`](./level-3-advanced/task-1-rate-limiter) |
+
 ---
 
 ## Assessment Rules & Evaluation
 
-- **Environment:** Requires Python 3.8 or newer. Zero pip packages required.
-- **Contract Integrity:** Do not change function signatures, module file names, or return dictionary keys.
+- **Environment:** Requires Python 3.8 or newer. Zero external pip packages required across all tasks.
+- **Contract Integrity:** Do not change public method signatures, module file names, or interface contracts.
 - **Testing Discipline:** You must write new unit tests in `tests/` to prove your fix works across edge cases.
+- **Deterministic Testing:** In Level 3 tasks, use the provided `TestClock` injection pattern rather than flaky `time.sleep()`.
 - **Responsible AI Use:** You are permitted to use AI coding tools (e.g., Copilot, ChatGPT, Claude), but you must disclose their use in `CANDIDATE_SUBMISSION.md` and thoroughly understand your code. During the follow-up AI interview, you will be asked to explain your implementation line by line.
 
 ---
