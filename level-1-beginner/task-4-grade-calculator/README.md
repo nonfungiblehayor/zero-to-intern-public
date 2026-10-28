@@ -52,10 +52,23 @@ Your task is to investigate `src/grade_calculator.py`, reproduce the error, fix 
 
 ---
 
-## 4. Setup & Reproduction
+## 4. Setup & Running the Application
 
+### Option 1: Interactive Fullstack Web UI
+1. **Start the API Server:**
+   ```bash
+   python3 api.py
+   ```
+2. **Start the Frontend (in a new terminal):**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+   *Open `http://localhost:5173` in your browser. You can click "Ticket #EDU-101" to load the reproduction score (95.0%), observe the bug live in the UI, and see it resolve when you fix `src/grade_calculator.py`.*
+
+### Option 2: CLI Unit Tests
 ```bash
-cd starter_repo
 python3 -m unittest discover tests
 ```
 Observed failure:

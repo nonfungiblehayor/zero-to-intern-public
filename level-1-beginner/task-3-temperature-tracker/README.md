@@ -17,20 +17,44 @@ You are assigned to investigate, reproduce, and fix these issues in our analyzer
 
 ---
 
+## Running the Application & Reproducing Defects
+
+### Option A: Interactive Web UI (Visual Studio)
+
+1. **Start the Backend API:**
+   ```bash
+   python3 api.py
+   ```
+2. **Start the Frontend Studio:**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+3. Open `http://localhost:5173`. Click the preset scenario **"Ticket #WEATHER-301"** or **"Ticket #WEATHER-303"** to watch the sentinel bug and crash live in the UI!
+
+### Option B: CLI Unit Tests
+
+Run the test suite directly:
+```bash
+python3 -m unittest discover tests
+```
+Observe how the reproduction tests fail:
+```
+AssertionError: 0.0 != 18.5
+ZeroDivisionError: division by zero
+```
+
+---
+
 ## Your Objectives
 
 1. **Investigate the Codebase:**
    - Inspect `src/temperature_analyzer.py` and its corresponding test suite `tests/test_temperature_analyzer.py`.
-2. **Reproduce the Bugs:**
-   - Run the test suite:
-     ```bash
-     python3 -m unittest discover tests
-     ```
-   - Observe how `test_bug_reproduction_all_warm_readings_min_zero`, `test_bug_reproduction_all_subzero_readings_max_zero`, and `test_bug_reproduction_empty_readings_division_by_zero` fail.
-3. **Diagnose Root Cause:**
+2. **Diagnose Root Cause:**
    - Explain why `min_temp = 0.0` and `max_temp = 0.0` produce incorrect extrema.
    - Explain what causes `ZeroDivisionError` when calculating the average of an empty list.
-4. **Implement the Fix:**
+3. **Implement the Fix:**
    - Modify `src/temperature_analyzer.py` to correctly calculate minimum, maximum, and average values.
    - For an empty reading list, return a safe dictionary with:
      ```python
@@ -42,15 +66,14 @@ You are assigned to investigate, reproduce, and fix these issues in our analyzer
          "is_freezing": False
      }
      ```
-5. **Expand Test Coverage:**
+4. **Expand Test Coverage:**
    - Add tests covering single-element lists, uniform values, mixed integers and floats, rounding precision, and type validation.
-6. **Submit Documentation:**
-   - Fill out [CANDIDATE_SUBMISSION.md](file:///home/l2e/Documents/talent-nation/zero-to-intern/Bug-Hunt/level-1-beginner/task-3-temperature-tracker/starter_repo/CANDIDATE_SUBMISSION.md).
+5. **Prepare for Mentor Review:**
+   - Be prepared to discuss sentinel values, edge cases, your fix, and test coverage during your technical interview.
 
 ---
 
 ## Rules and Guidelines
 
-- Do not introduce external dependencies. Use Python 3 Standard Library only.
-- Maintain the exact return dictionary keys: `"min_temp"`, `"max_temp"`, `"avg_temp"`, `"reading_count"`, `"is_freezing"`.
-- Document your findings clearly in the submission form.
+- Do not alter function signatures or expected output dictionary schema.
+- Explain your technical findings and testing discipline clearly.

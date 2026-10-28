@@ -10,7 +10,7 @@ The Customer Support and Finance teams have raised an urgent high-priority ticke
 
 Finance discovered that Gold and Platinum loyalty members are getting discounts on digital gift cards during checkout. Digital gift cards are legal cash-equivalents and store policy mandates that **discounts must never apply to gift cards or non-discountable items**.
 
-Your mission is to investigate the pricing module, reproduce the defect, resolve the root cause, verify your fix with tests, and submit your technical explanation.
+Your mission is to investigate the pricing module, reproduce the defect via tests, resolve the root cause, verify your fix, and prepare to explain your solution to your mentor during the technical interview.
 
 ---
 
@@ -80,22 +80,17 @@ Ensure your solution strictly adheres to the TalentCart business rules:
 
 ---
 
-## 4. Repository Setup & Reproduction Steps
+## 4. Running the Tests & Reproducing the Bug (CLI)
 
-1. **Prerequisites:** Python 3.8+ installed. No external packages are required.
-2. **Navigate to the repository:**
-   ```bash
-   cd starter_repo
-   ```
-3. **Run existing unit tests:**
-   ```bash
-   python3 -m unittest discover tests
-   ```
-4. **Observe the test failure:**
-   Notice that `test_bug_reproduction_mixed_discountable_and_gift_card` fails:
-   ```
-   AssertionError: 7.5 != 2.5
-   ```
+Run unit tests directly:
+```bash
+python3 -m unittest discover tests
+```
+
+Observe the test failure:
+```
+AssertionError: 7.5 != 2.5
+```
 
 ---
 
@@ -106,25 +101,12 @@ Ensure your solution strictly adheres to the TalentCart business rules:
 3. **Test:**
    - Ensure the reproduction test passes.
    - Ensure all other existing tests continue to pass without regression.
-   - Add new tests in `tests/test_cart_pricing.py` covering edge cases (such as a cart containing *only* gift cards, mixed quantities, case sensitivity, etc.).
-4. **Document:** Complete the submission template detailing your findings and explanation.
+   - Add new tests in `tests/test_cart_pricing.py` covering edge cases.
+4. **Prepare for Review:** Be ready to walk through your code changes and debugging methodology during your mentor interview.
 
 ---
 
 ## 6. Time Limit & AI Policy
 
 - **Allocated Time:** 60–90 minutes.
-- **AI Policy:** You may use AI coding assistants (e.g., autocomplete, chat). However:
-  - You are 100% accountable for the correctness and quality of your code.
-  - You must be able to explain the root cause and justify your changes.
-  - Blindly accepting AI suggestions that break edge cases or introduce regressions will result in deductions.
-
----
-
-## 7. Submission Checklist
-
-Before submitting, ensure:
-- [ ] `python3 -m unittest discover tests` runs and 100% of tests pass.
-- [ ] You added tests covering edge cases.
-- [ ] Your code contains no hardcoded hacks or magic numbers.
-- [ ] You completed all questions in `CANDIDATE_SUBMISSION.md`.
+- **AI Policy:** You may use AI coding assistants. However, you will be asked to justify your design decisions and explain the bug mechanics during the mentor interview.
