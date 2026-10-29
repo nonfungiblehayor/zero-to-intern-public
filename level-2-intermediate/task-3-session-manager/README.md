@@ -4,11 +4,11 @@
 
 ---
 
-## Welcome to AuthShield
+## Welcome to the Team
 
-Welcome to the Identity & Security Infrastructure engineering team at **AuthShield**. We maintain the authentication and session management services protecting thousands of customer endpoints.
+Welcome to the Identity & Security Infrastructure engineering team at **AuthShield**. We maintain the authentication, central session registry, and token management services protecting thousands of corporate customer endpoints.
 
-Our architecture separates authentication into distinct modules:
+Our modular architecture coordinates authentication across layers:
 - `models.py`: Data entities representing sessions, tokens, and validation results.
 - `session_store.py`: Central in-memory registry tracking session lifecycles and token states.
 - `token_service.py`: Service issuing, validating, and rotating access and refresh tokens.
@@ -23,48 +23,80 @@ You are tasked with investigating where cross-module validation broke down, impl
 
 ---
 
+## 🚀 Running the Fullstack Application & Tests
+
+This task is configured as a **Fullstack Application (API + React UI)** with unit tests. You can test your changes using either the interactive web console or the automated test suite.
+
+### Option A: Interactive SOC Console (Web UI)
+1. **Launch the Backend API Server:**
+   ```bash
+   python3 api.py
+   ```
+   *Runs on `http://localhost:8000` (FastAPI / Swagger docs at `/docs` if requirements installed, with built-in HTTP fallback).*
+
+2. **Launch the Frontend Console:**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+   *Open `http://localhost:5173` in your browser.*
+   - Test live authentication requests against `/api/protected`.
+   - Use the **1-Click Defect Reproduction Suite** to observe vulnerabilities in real time before and after your fix.
+
+### Option B: Command-Line Test Suite
+Run the test suite directly from the task root:
+```bash
+python3 -m unittest discover tests
+```
+Observe failures in:
+- `test_bug_reproduction_ticket_auth_301_revocation_bypass`
+- `test_bug_reproduction_ticket_auth_302_refresh_token_reuse`
+- `test_bug_reproduction_ticket_auth_303_exact_expiration_boundary`
+
+---
+
 ## Your Objectives
 
 1. **Investigate Codebase:**
    - Explore `src/`:
      - `models.py`: Domain dataclasses (`Session`, `Token`, `TokenType`, `TokenValidationResult`).
      - `session_store.py`: In-memory storage for sessions and tokens.
-     - `token_service.py`: Token issuance, validation, and rotation service.
+     - `token_service.py`: Token issuance, validation, and rotation service (**YOUR TASK IS HERE**).
      - `auth_middleware.py`: HTTP Authorization header authentication gateway.
-2. **Reproduce the Incidents:**
-   - Execute the test suite:
-     ```bash
-     python3 -m unittest discover tests
-     ```
-   - Observe the failures in:
-     - `test_bug_reproduction_ticket_auth_301_revocation_bypass`
-     - `test_bug_reproduction_ticket_auth_302_refresh_token_reuse`
-     - `test_bug_reproduction_ticket_auth_303_exact_expiration_boundary`
-3. **Analyze Root Causes:**
+
+2. **Analyze Root Causes:**
    - **Cross-Layer State:** Why did `validate_access_token` ignore whether `session.is_revoked`?
-   - **Token Rotation:** Why did `refresh_token` issue new tokens without checking if the previous token was already used?
-   - **Boundary Comparisons:** Why did using `<` instead of `<=` allow expired tokens to slip through?
-4. **Implement the Fix in `src/token_service.py`:**
+   - **Token Rotation:** Why did `refresh_token` issue new tokens without checking if the previous token was already used or marking it spent?
+   - **Boundary Comparisons:** Why did using `<` instead of `<=` allow expired tokens to slip through at the exact expiration second?
+
+3. **Implement the Fix in `src/token_service.py`:**
+   - In `create_session`:
+     - Validate that `user_id` is a non-empty string; raise `ValueError` otherwise.
+   - In `issue_tokens`:
+     - Ensure the underlying session is not expired (`session.expires_at <= now`).
    - In `validate_access_token`:
      - Cross-check `self.store.get_session(token.session_id)`. If the session is missing or `session.is_revoked`, reject with `is_valid=False` and `error_code="SESSION_REVOKED"`.
      - Check session expiration (`session.expires_at <= now`).
      - Ensure expiration check uses `<= now` so tokens at exact expiration second are rejected.
    - In `refresh_token`:
-     - Reject if `old_token.is_used` with a `ValueError("Refresh token has already been used")`.
+     - Reject if `old_token.is_used` with `ValueError("Refresh token has already been used")`.
      - Mark `old_token` as used: `self.store.mark_token_used(old_refresh_token_id)`.
-5. **Expand Test Coverage:**
+
+4. **Expand Test Coverage:**
    - Add unit tests in `tests/test_session_manager.py` covering:
      - Multi-device user logout (`revoke_user_sessions`).
      - Expired refresh tokens.
      - Malformed or missing `Authorization` headers.
      - Input validation (empty user IDs).
-6. **Submit Documentation:**
-   - Complete all sections in [CANDIDATE_SUBMISSION.md](file:///home/l2e/Documents/talent-nation/zero-to-intern/Bug-Hunt/level-2-intermediate/task-3-session-manager/starter_repo/CANDIDATE_SUBMISSION.md).
+
+5. **Prepare for Technical Defense:**
+   - Be prepared to discuss session revocation strategies (e.g. distributed blocklists vs token introspection), replay defense, and defense-in-depth during your technical interview.
 
 ---
 
 ## Rules and Guidelines
 
-- Python 3 Standard Library only. Do not install external libraries.
+- Python 3 Standard Library only for backend logic (`dataclasses`, `enum`, `datetime`, `uuid`).
 - Do not alter public signatures or return types of `TokenService` methods.
-- Document all security trade-offs in `CANDIDATE_SUBMISSION.md`.
+- Demonstrate clean engineering practices and regression prevention.
