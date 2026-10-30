@@ -49,4 +49,5 @@ Recently, our site reliability team detected dual-leader split-brain events duri
 3. Fix the defects in `src/lease_manager.py`.
 4. Verify all tests pass cleanly without breaking baseline single-candidate behavior.
 5. Author regression tests covering edge cases (even-node clusters, single-node clusters, node recovery).
-6. Fill in your technical explanation and mathematical justifications in `CANDIDATE_SUBMISSION.md`.
+6. Test your fixes interactively using the fullstack cluster console (`api.py` and `frontend/`) and its 1-click reproduction benches.
+7. Be prepared to defend your diagnosis, quorum calculations, and Paxos ballot invariants during the technical interview.
