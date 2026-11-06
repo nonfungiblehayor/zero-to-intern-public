@@ -21,14 +21,12 @@ class TestGradeCalculator(unittest.TestCase):
         """
         REPRODUCTION TEST FOR BUG REPORT #EDU-401:
         A student scoring 95.0 should receive an 'A'.
-        Under the bug, independent if statements overwrite 'A' with 'D'!
         """
         self.assertEqual(assign_letter_grade(95.0), "A", "High scores >= 90 must receive an 'A'!")
 
     def test_bug_reproduction_grade_b_overwritten(self):
         """
         A student scoring 85.0 should receive a 'B'.
-        Under the bug, independent if statements overwrite 'B' with 'D'!
         """
         self.assertEqual(assign_letter_grade(85.0), "B", "Scores in the 80s must receive a 'B'!")
 

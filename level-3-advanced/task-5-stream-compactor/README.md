@@ -48,4 +48,5 @@ Recently, customer-facing teams reported ghost record resurrections and consumer
 3. Fix the defects in `src/compactor.py`.
 4. Verify all tests pass cleanly.
 5. Author regression tests covering edge cases (multi-segment merges, self-contained tombstone purges, repeated compaction).
-6. Fill in your technical explanation and storage mechanics analysis in `CANDIDATE_SUBMISSION.md`.
+6. Test your fixes interactively using the fullstack stream studio (`api.py` and `frontend/`) and its 1-click reproduction benches.
+7. Be prepared to defend your diagnosis, watermark reduction invariants, and tombstone lifecycle semantics during the technical interview.

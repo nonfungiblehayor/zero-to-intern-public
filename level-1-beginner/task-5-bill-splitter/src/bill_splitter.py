@@ -23,19 +23,10 @@ def calculate_split(total_bill: Any, num_people: Any, tip_percent: Any = 15) -> 
       - 'num_people': int
       - 'per_person': float
     """
-    # BUG IDENTIFICATION POINT 1:
-    # Missing type coercion: inputs arriving as strings (e.g. from web forms)
-    # cause TypeError during mathematical operations.
-    # BUG IDENTIFICATION POINT 2:
-    # Using integer division '//' instead of floating-point division '/',
-    # truncating cents and undercharging each diner!
-    # BUG IDENTIFICATION POINT 3:
-    # Zero or negative diners causes unhandled ZeroDivisionError.
 
     tip_amount = round(total_bill * (tip_percent / 100), 2)
     total_with_tip = round(total_bill + tip_amount, 2)
 
-    # Truncating integer division bug:
     per_person = round(total_with_tip // num_people, 2)
 
     return {

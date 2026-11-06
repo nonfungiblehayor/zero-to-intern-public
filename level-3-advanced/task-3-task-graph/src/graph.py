@@ -40,9 +40,6 @@ class WorkflowGraph:
         """
         Returns True if the workflow contains a directed cycle, False otherwise.
         """
-        # DEFECT (Ticket #DAG-703): Only runs DFS from the first task!
-        # If the graph has multiple disconnected components or a cycle in a separate
-        # component, this returns False (false negative cycle detection).
         if not self._tasks:
             return False
 

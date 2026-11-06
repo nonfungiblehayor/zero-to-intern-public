@@ -143,7 +143,6 @@ class TestCartPricing(unittest.TestCase):
         summary = calculate_order_summary(cart)
 
         self.assertEqual(summary["subtotal"], 75.00)
-        # Under the bug, discount_amount evaluates to 7.50 instead of 2.50!
         self.assertEqual(summary["discount_amount"], 2.50)
         self.assertEqual(summary["discounted_subtotal"], 72.50)
         self.assertEqual(summary["shipping_fee"], 0.00)

@@ -46,7 +46,7 @@ try:
             stats = analyze_temperatures(payload.readings)
             return {"success": True, "stats": stats}
         except ZeroDivisionError as e:
-            raise HTTPException(status_code=500, detail="ZeroDivisionError: list is empty (starter bug).")
+            raise HTTPException(status_code=500, detail="ZeroDivisionError: list is empty.")
         except (ValueError, TypeError) as e:
             raise HTTPException(status_code=400, detail=str(e))
         except Exception as e:
@@ -101,7 +101,7 @@ except ImportError:
                     self.send_header("Content-Type", "application/json")
                     self._send_cors_headers()
                     self.end_headers()
-                    self.wfile.write(json.dumps({"detail": "ZeroDivisionError: list is empty (starter bug)."}).encode())
+                    self.wfile.write(json.dumps({"detail": "ZeroDivisionError: list is empty."}).encode())
                 except (ValueError, TypeError) as e:
                     self.send_response(400)
                     self.send_header("Content-Type", "application/json")

@@ -32,10 +32,6 @@ def assign_letter_grade(score: float, has_extra_credit: bool = False) -> str:
     if has_extra_credit:
         final_score = min(100.0, final_score + 5.0)
 
-    # BUG IDENTIFICATION POINT:
-    # Using independent 'if' statements instead of 'if / elif / else' control flow!
-    # A score of 95 satisfies (>= 90), setting grade = 'A'.
-    # But it also satisfies (>= 80), (>= 70), (>= 60), overwriting grade with 'D'!
     grade = "F"
     if final_score >= 90.0:
         grade = "A"

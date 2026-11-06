@@ -34,8 +34,6 @@ class WriteThroughCacheManager:
 
     def _handle_eviction(self, evicted_entry: CacheEntry) -> None:
         self.stats.evictions += 1
-        # DEFECT (Ticket #CACHE-602): If the evicted entry is dirty, it is deleted from the write buffer
-        # without being written to the backing store, leading to silent data loss!
         if evicted_entry.key in self._write_buffer:
             del self._write_buffer[evicted_entry.key]
 
@@ -45,13 +43,9 @@ class WriteThroughCacheManager:
 
         now = self.clock.now()
 
-        # DEFECT (Ticket #CACHE-601): Fails to check _write_buffer before querying cache or backing store!
-        # If an item was written to buffer and evicted from LRU, reading falls through to stale backing store.
 
         entry = self._cache.get(key)
         if entry is not None:
-            # DEFECT (Ticket #CACHE-603): Ignores TTL expiration check on cache hit!
-            # It returns the cached value even if entry.expires_at <= now.
             self.stats.hits += 1
             return entry.value
 

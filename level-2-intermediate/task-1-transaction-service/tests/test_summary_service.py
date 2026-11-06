@@ -58,7 +58,6 @@ class TestTransactionSummaryService(unittest.TestCase):
         """
         REPRODUCTION TEST 1 (Ticket #FIN-201):
         Pending deposits and debit holds must NOT contribute to settled totals.
-        Under the bug, pending items leak into the summary!
         """
         account_id = "ACC-PENDING-TEST"
         # Completed deposit

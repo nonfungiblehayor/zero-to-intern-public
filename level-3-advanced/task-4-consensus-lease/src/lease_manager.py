@@ -35,8 +35,6 @@ class ClusterLeaseManager:
         """
         Calculate required quorum size for consensus.
         """
-        # BUG (Ticket #LEASE-801): Uses integer division total // 2 instead of strict majority.
-        # In a 5-node cluster, 5 // 2 == 2, allowing split-brain if partitioned into 2 and 3!
         return len(self.nodes) // 2
 
     def acquire_lease(
@@ -79,14 +77,11 @@ class ClusterLeaseManager:
         quorum = self.get_quorum_size()
 
         if len(granted_votes) >= quorum:
-            # BUG (Ticket #LEASE-803): Computes lease grant starting from clock AFTER RTT transit,
-            # ignoring that peers accepted the promise starting from start_time!
-            # Leader will hold lease past peer expiration window.
             grant = LeaseGrant(
                 resource=resource,
                 leader_id=candidate_id,
                 ballot=ballot,
-                granted_at_ms=self.clock.now_ms(),  # BUGGY: should be start_time
+                granted_at_ms=self.clock.now_ms(),
                 duration_ms=duration_ms
             )
 
@@ -98,9 +93,6 @@ class ClusterLeaseManager:
             self.active_leases[resource] = grant
             return grant
         else:
-            # BUG (Ticket #LEASE-802): When rejected, fails to adopt peer's higher ballot.
-            # Next attempt will increment only by +1 from candidate's local ballot,
-            # causing livelock against peers with higher ballots.
             return None
 
     def is_lease_valid(self, resource: str, leader_id: str) -> bool:

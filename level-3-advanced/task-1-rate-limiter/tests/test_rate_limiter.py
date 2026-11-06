@@ -49,7 +49,6 @@ class TestRateLimiter(unittest.TestCase):
         - Previous window weight should be (1.0 - 45/60) = 0.25 (25%).
         - Estimated carried-over count should be 8 * 0.25 = 2.0.
         - Client should be permitted 8 additional requests (10 - 2 = 8).
-        Under the bug, weight is inverted (45/60 = 0.75), over-penalizing old requests!
         """
         client_id = "client-sliding"
         # Window 1: 8 requests at t=1000

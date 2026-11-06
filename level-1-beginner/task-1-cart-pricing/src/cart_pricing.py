@@ -114,11 +114,6 @@ def calculate_order_summary(cart: Dict[str, Any]) -> Dict[str, Any]:
     # Step 1: Gross Subtotal
     subtotal = calculate_subtotal(items)
 
-    # Step 2: Tier Discount
-    # BUG IDENTIFICATION POINT:
-    # The starter code passes the entire subtotal directly to calculate_tier_discount,
-    # completely ignoring whether individual items have `is_discountable: False`
-    # (such as gift cards or promotional exclusions).
     discount_amount = calculate_tier_discount(subtotal, tier)
 
     # Step 3: Discounted Subtotal
