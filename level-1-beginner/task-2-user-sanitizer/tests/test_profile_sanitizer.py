@@ -26,7 +26,6 @@ class TestProfileSanitizer(unittest.TestCase):
         """
         REPRODUCTION TEST 1 (Ticket #AUTH-201):
         Leading and trailing whitespace must be stripped from all fields.
-        Under the bug, string method returns are ignored, so spaces remain!
         """
         profile = {
             "username": "   dev_sam   ",
@@ -42,7 +41,6 @@ class TestProfileSanitizer(unittest.TestCase):
         """
         REPRODUCTION TEST 2 (Ticket #AUTH-202):
         Email must be converted to lowercase, and full name converted to Title Case.
-        Under the bug, strings remain unnormalized!
         """
         profile = {
             "username": "pat_lee",

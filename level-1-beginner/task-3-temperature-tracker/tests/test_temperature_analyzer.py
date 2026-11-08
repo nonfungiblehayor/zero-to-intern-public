@@ -23,7 +23,6 @@ class TestTemperatureAnalyzer(unittest.TestCase):
         """
         REPRODUCTION TEST 1 (Ticket #STATION-101):
         When all readings are well above freezing (summer day), min_temp should
-        be the lowest reading (e.g. 18.5), but the buggy code outputs 0.0!
         """
         readings = [18.5, 22.0, 25.4, 21.0]
         result = analyze_temperatures(readings)
@@ -35,7 +34,6 @@ class TestTemperatureAnalyzer(unittest.TestCase):
         """
         REPRODUCTION TEST 2 (Ticket #STATION-102):
         When all readings are below freezing (winter arctic vortex), max_temp should
-        be the highest reading (e.g. -3.5), but the buggy code outputs 0.0!
         """
         readings = [-15.0, -8.2, -3.5, -12.0]
         result = analyze_temperatures(readings)

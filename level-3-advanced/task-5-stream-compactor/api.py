@@ -226,6 +226,7 @@ class StreamService:
 
             return {
                 "ticket": "#STREAM-901",
+<<<<<<< HEAD
                 "description": "Ghost Record Resurrection via Premature Tombstone Purge",
                 "tombstone_retained_in_compacted": tombstone_kept,
                 "materialized_state": state,
@@ -233,6 +234,13 @@ class StreamService:
                 "verdict": ("DEFECT TRIGGERED: user1 resurrected as 'Alice' because tombstone was discarded while older segment held user1!"
                             if resurrected else
                             "CLEAN: Tombstone was safely retained; user1 properly deleted from materialized state."),
+=======
+                "description": "Ghost Record Scenario",
+                "tombstone_retained_in_compacted": tombstone_kept,
+                "materialized_state": state,
+                "resurrected": resurrected,
+                "verdict": ("Unexpected result observed." if resurrected else "Result matches expectations."),
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                 "state": self.get_state()
             }
 
@@ -243,6 +251,7 @@ class StreamService:
             c.set_consumer_watermark("consumer-lagging", 50)
             safe_watermark = c.get_safe_compaction_watermark()
 
+<<<<<<< HEAD
             is_buggy = (safe_watermark == 500)
             return {
                 "ticket": "#STREAM-902",
@@ -253,6 +262,16 @@ class StreamService:
                 "verdict": ("DEFECT TRIGGERED: Watermark returned 500 (max)! Lagging consumer offsets 50..500 would be compacted away!"
                             if is_buggy else
                             f"CLEAN: Safe watermark is {safe_watermark} (min), properly protecting lagging consumer."),
+=======
+            unexpected_result = (safe_watermark == 500)
+            return {
+                "ticket": "#STREAM-902",
+                "description": "Watermark Scenario",
+                "consumer_fast": 500,
+                "consumer_lagging": 50,
+                "safe_watermark_calculated": safe_watermark,
+                "verdict": ("Unexpected result observed." if unexpected_result else "Result matches expectations."),
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                 "state": self.get_state()
             }
 
@@ -270,21 +289,37 @@ class StreamService:
                 val = r1.value if r1 else None
                 return {
                     "ticket": "#STREAM-903",
+<<<<<<< HEAD
                     "description": "Corrupted Sparse Index Offset Causing IndexError",
                     "lookup_result": val,
                     "index_entry": compacted.index.get("device:1"),
                     "compacted_records_len": len(compacted.records),
                     "verdict": f"CLEAN: Sparse index maps to array position {compacted.index.get('device:1')} (value: {val}).",
+=======
+                    "description": "Sparse Index Scenario",
+                    "lookup_result": val,
+                    "index_entry": compacted.index.get("device:1"),
+                    "compacted_records_len": len(compacted.records),
+                    "verdict": "Result matches expectations.",
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                     "state": self.get_state()
                 }
             except IndexError as e:
                 return {
                     "ticket": "#STREAM-903",
+<<<<<<< HEAD
                     "description": "Corrupted Sparse Index Offset Causing IndexError",
                     "error": str(e),
                     "index_entry": compacted.index.get("device:1"),
                     "compacted_records_len": len(compacted.records),
                     "verdict": f"DEFECT TRIGGERED: IndexError! Index mapped key to raw log offset {compacted.index.get('device:1')} instead of array position.",
+=======
+                    "description": "Sparse Index Scenario",
+                    "error": str(e),
+                    "index_entry": compacted.index.get("device:1"),
+                    "compacted_records_len": len(compacted.records),
+                    "verdict": "Unexpected result observed.",
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                     "state": self.get_state()
                 }
         else:

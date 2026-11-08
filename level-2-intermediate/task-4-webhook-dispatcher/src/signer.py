@@ -15,9 +15,6 @@ class WebhookSigner:
         t=<timestamp>,v1=<hex_signature>
         Signed payload format: "<timestamp>.<canonical_json_body>"
         """
-        # DEFECT (Ticket #HOOK-401): Using str(payload) produces Python dict format
-        # with single quotes (e.g. "{'foo': 'bar'}") rather than valid canonical JSON.
-        # This causes HMAC verification to fail on standard HTTP consumer receivers.
         raw_body = str(payload)
         signed_payload = f"{int(timestamp)}.{raw_body}".encode("utf-8")
         

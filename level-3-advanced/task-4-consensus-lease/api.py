@@ -216,6 +216,7 @@ class ClusterService:
             res1 = self.acquire_lease("N1", "resource:catalog", duration_ms=1000)
             res2 = self.acquire_lease("N3", "resource:catalog", duration_ms=1000)
 
+<<<<<<< HEAD
             # In starter repo: quorum is 5 // 2 = 2. N1 gets 2 votes (N1, N2) >= 2 -> GRANTED!
             # N3 gets 3 votes (N3, N4, N5) >= 2 -> GRANTED!
             # Two nodes hold lease on same resource concurrently = SPLIT BRAIN!
@@ -223,13 +224,25 @@ class ClusterService:
             return {
                 "ticket": "#LEASE-801",
                 "description": "5-Node Partition Split-Brain via Invalid Quorum (N // 2)",
+=======
+            has_split_brain = (res1["success"] and res2["success"])
+            return {
+                "ticket": "#LEASE-801",
+                "description": "5-Node Partition Scenario",
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                 "quorum_calculated": self.manager.get_quorum_size(),
                 "partition_minority_result": res1,
                 "partition_majority_result": res2,
                 "split_brain_detected": has_split_brain,
+<<<<<<< HEAD
                 "verdict": ("DEFECT TRIGGERED: Split-brain occurred! Minority partition {N1,N2} granted lease due to quorum=2."
                             if has_split_brain else
                             "CLEAN: Majority {N3,N4,N5} granted lease; minority {N1,N2} rejected (quorum=3 required)."),
+=======
+                "verdict": ("Unexpected result observed."
+                            if has_split_brain else
+                            "Result matches expectations."),
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                 "state": self.get_state()
             }
 
@@ -246,14 +259,22 @@ class ClusterService:
             clean = adopted and (try2["grant"] is not None and try2["grant"]["ballot"] > 50)
             return {
                 "ticket": "#LEASE-802",
+<<<<<<< HEAD
                 "description": "Election Rejection Livelock via Ballot Non-Adoption",
+=======
+                "description": "Election Rejection Scenario",
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                 "first_attempt": try1,
                 "second_attempt": try2,
                 "candidate_final_ballot": self.manager.local_ballots.get("N1", 0),
                 "adopted_higher_ballot": adopted,
+<<<<<<< HEAD
                 "verdict": (f"CLEAN: Candidate N1 adopted peer ballot 50 and acquired lease on retry with ballot {try2['grant']['ballot']}!"
                             if clean else
                             f"DEFECT TRIGGERED: Candidate N1 failed to adopt peer ballot 50 (local ballot is {self.manager.local_ballots.get('N1', 0)} <= 50)."),
+=======
+                "verdict": ("Result matches expectations." if clean else "Unexpected result observed."),
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                 "state": self.get_state()
             }
 
@@ -267,6 +288,7 @@ class ClusterService:
             self.advance_clock(850)
             validity_now = self.manager.is_lease_valid("resource:lock", "N1")
 
+<<<<<<< HEAD
             # At T=2050ms:
             # In buggy starter: granted_at_ms was 1200ms, expires_at_ms = 2200ms. 2050 < 2200 -> valid!
             # But peer promises started at T=1000ms and expired at T=2000ms! Leader holds lease unsafely!
@@ -280,6 +302,15 @@ class ClusterService:
                 "verdict": ("DEFECT TRIGGERED: Leader N1 considers lease VALID at T=2050ms, while peer promises expired at T=2000ms!"
                             if validity_now else
                             "CLEAN: Lease correctly EXPIRED at T=2000ms because grant duration was measured from start_time."),
+=======
+            return {
+                "ticket": "#LEASE-803",
+                "description": "Lease Expiry Scenario",
+                "grant_result": grant_res,
+                "clock_ms": self.clock.now_ms(),
+                "leader_lease_valid": validity_now,
+                "verdict": ("Unexpected result observed." if validity_now else "Result matches expectations."),
+>>>>>>> 9e28cd2d610a8a5d4dd29073caae8965a7e0ca2f
                 "state": self.get_state()
             }
 

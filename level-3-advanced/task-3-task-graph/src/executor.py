@@ -38,9 +38,6 @@ class WorkflowExecutor:
                 if task.status != TaskStatus.PENDING:
                     continue
 
-                # DEFECT (Ticket #DAG-702): Fan-In bug!
-                # Uses any() instead of all(), running multi-dependency tasks prematurely
-                # when only one prerequisite has finished!
                 if not task.dependencies:
                     ready_tasks.append(task)
                 elif any(dep in completed for dep in task.dependencies):
@@ -63,9 +60,6 @@ class WorkflowExecutor:
                     task.status = TaskStatus.FAILED
                     failed.add(task.task_id)
 
-                    # DEFECT (Ticket #DAG-701): Upstream Failure Deadlock!
-                    # When a task fails, downstream tasks depending on it are NOT marked SKIPPED.
-                    # They remain in PENDING and are never recorded in skipped_tasks!
 
         is_success = len(failed) == 0 and len(completed) == len(tasks)
         return WorkflowResult(

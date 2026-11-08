@@ -16,9 +16,6 @@ class RetryPolicy:
         Network errors (status_code is None) or 5xx server errors (500, 502, 503, 504) are retryable.
         4xx client errors (400, 401, 403, 404, 422) are non-retryable and must fail immediately.
         """
-        # DEFECT (Ticket #HOOK-402): Treating any non-200 code as retryable.
-        # This causes client 4xx errors (e.g. 401 Unauthorized, 404 Not Found)
-        # to be retried repeatedly, spamming downstream endpoints.
         if status_code is None:
             return True
         return status_code != 200
@@ -31,5 +28,4 @@ class RetryPolicy:
              Attempt 2 failure -> delay = 1.0 * (2^1) = 2.0s
              Attempt 3 failure -> delay = 1.0 * (2^2) = 4.0s
         """
-        # DEFECT (Ticket #HOOK-403): Fixed delay calculation ignoring attempt count power!
         return self.initial_delay * self.backoff_factor

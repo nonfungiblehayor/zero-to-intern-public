@@ -45,14 +45,11 @@ class MetricAggregator:
         buckets = []
 
         for window in windows:
-            # DEFECT (Ticket #MET-501): Inclusive comparison (<= window.end_time)
-            # incorrectly double-counts or traps points on the exact boundary into the earlier window!
             matching_values = [
                 p.value for p in points
                 if window.start_time <= p.timestamp <= window.end_time
             ]
 
-            # DEFECT (Ticket #MET-502): Omits empty windows completely even when fill_empty_windows=True!
             if not matching_values:
                 continue
 
@@ -83,8 +80,6 @@ class MetricAggregator:
         if not values:
             return 0.0
 
-        # DEFECT (Ticket #MET-503): Accesses values by index without sorting first!
-        # Also uses int truncation which skews smaller distributions.
         idx = int(len(values) * 0.95)
         if idx >= len(values):
             idx = len(values) - 1

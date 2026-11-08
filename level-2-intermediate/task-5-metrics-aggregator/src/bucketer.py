@@ -26,8 +26,6 @@ class WindowBucketer:
         """
         Returns a half-open TimeWindow [start, start + window_seconds).
         """
-        # DEFECT (Ticket #MET-501): Starter incorrectly uses <= boundary check or misaligns
-        # points exactly on the boundary into the previous window.
         start = WindowBucketer.align_timestamp(timestamp, window_seconds)
         return TimeWindow(start_time=start, end_time=start + window_seconds)
 

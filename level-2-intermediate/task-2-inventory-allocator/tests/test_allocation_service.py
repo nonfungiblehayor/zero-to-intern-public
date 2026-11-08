@@ -48,7 +48,6 @@ class TestAllocationService(unittest.TestCase):
         REPRODUCTION TEST 1 (Ticket #SHIP-301):
         When a multi-item order fails midway due to insufficient stock for a later item,
         all previously reserved items MUST be rolled back (released) immediately.
-        Under the bug, partial reservations are never released, creating zombie reservations!
         """
         self.wh_east.set_stock("SKU-LAPTOP", 5)
         self.wh_west.set_stock("SKU-DOCK", 0)   # Out of stock!

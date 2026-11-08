@@ -26,8 +26,6 @@ class StreamCompactor:
         """
         if not self.consumer_watermarks:
             return 0
-        # BUG (Ticket #STREAM-902): Uses max instead of min across partition consumer offsets!
-        # Lagging consumers have their unread events compacted away prematurely.
         return max(self.consumer_watermarks.values())
 
     def compact_segments(
@@ -45,9 +43,6 @@ class StreamCompactor:
         for seg in segments_to_compact:
             for rec in seg.records:
                 if rec.is_tombstone:
-                    # BUG (Ticket #STREAM-901): Prematurely purges tombstones without checking
-                    # if older uncompacted segments still contain this key!
-                    # Discarding the tombstone causes older records to resurrect on log replay.
                     latest_per_key.pop(rec.key, None)
                 else:
                     latest_per_key[rec.key] = rec
@@ -66,8 +61,6 @@ class StreamCompactor:
                 timestamp_ms=rec.timestamp_ms
             )
             compacted.records.append(compacted_rec)
-            # BUG (Ticket #STREAM-903): Stores the old uncompacted offset (rec.offset)
-            # instead of new_pos in compacted.records, corrupting segment.get(key) lookups!
             compacted.index[rec.key] = rec.offset
 
         return compacted

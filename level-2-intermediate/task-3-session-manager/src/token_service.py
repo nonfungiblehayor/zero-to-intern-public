@@ -86,7 +86,6 @@ class TokenService:
         if not session or session.is_revoked:
             raise ValueError("Session is revoked or expired")
 
-        # NOTE: Starter defect - does not check old_token.is_used, and does not mark old token as used!
         return self.issue_tokens(old_token.session_id, current_time=now)
 
     def validate_access_token(
@@ -111,7 +110,6 @@ class TokenService:
                 error_message="Expected access token",
             )
 
-        # NOTE: Starter defect - uses < instead of <=, allowing token at exact expiration second
         if token.expires_at < now:
             return TokenValidationResult(
                 is_valid=False,
@@ -119,7 +117,6 @@ class TokenService:
                 error_message="Token has expired",
             )
 
-        # NOTE: Starter defect - does NOT check session.is_revoked!
 
         return TokenValidationResult(
             is_valid=True,

@@ -22,7 +22,6 @@ class TestBillSplitter(unittest.TestCase):
         A bill of $50.00 split among 4 people with 15% tip ($7.50).
         Total with tip: $57.50.
         Expected per person: $57.50 / 4 = $14.38 (rounded).
-        Under the bug, integer division // truncates to $14.00, shortchanging the bill by $1.50!
         """
         result = calculate_split(50.00, 4, tip_percent=15)
         self.assertEqual(result["tip_amount"], 7.50)
@@ -34,7 +33,6 @@ class TestBillSplitter(unittest.TestCase):
         REPRODUCTION TEST 2 (Ticket #PAY-502):
         Inputs received as numeric strings from a form payload (e.g. '60.00', '3', '20')
         must be safely converted and calculated.
-        Under the bug, multiplying string * float raises a TypeError!
         """
         result = calculate_split("60.00", "3", "20")
         self.assertEqual(result["subtotal"], 60.00)
